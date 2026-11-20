@@ -1,0 +1,6 @@
+/.local-db-test/
+/.cecyfit-verification/
+
+**/.env
+**/.env.*
+!**/.env.example
