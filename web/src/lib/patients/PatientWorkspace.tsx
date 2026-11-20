@@ -9,6 +9,7 @@ import { supabase } from "@/lib/supabase/clients";
 import { getPatient } from "./service";
 import type { Patient } from "./types";
 import { PatientNutrition } from "./PatientNutrition";
+import { PatientCare } from "./PatientCare";
 
 export function PatientWorkspace({ patientId, screenId }: { patientId: string; screenId: HostScreenId }) {
   const [result, setResult] = useState<{ patient: Patient | null; error?: string }>();
@@ -48,7 +49,7 @@ export function PatientWorkspace({ patientId, screenId }: { patientId: string; s
             <Btn to="H2i" variant="ghost">Historial</Btn>
           </nav>
         </details>
-        {screenId === "H2c" && <Panel title="Datos básicos">
+        {screenId === "H2c" && <><Panel title="Datos básicos">
           <dl className="grid grid-cols-2 gap-4 text-sm">
             {[
               ["Correo", patient.email], ["Teléfono", patient.phone],
@@ -57,10 +58,11 @@ export function PatientWorkspace({ patientId, screenId }: { patientId: string; s
               ["Cuenta móvil", patient.patient_user_id ? "Vinculada" : "Pendiente"],
             ].map(([label, value]) => <div key={label}><dt className="font-bold">{label}</dt><dd>{value || "Sin registrar"}</dd></div>)}
           </dl>
-        </Panel>}
+        </Panel><PatientCare patient={patient} /></>}
+        {screenId === "H2d" && <PatientCare patient={patient} />}
         {screenId === "H2b" && <Invitation patient={patient} />}
         {(screenId === "H2g" || screenId === "H7a") && <PatientNutrition patient={patient} tracking={screenId === "H2g"} />}
-        {screenId !== "H2c" && screenId !== "H2b" && screenId !== "H2g" && screenId !== "H7a" && (
+        {screenId !== "H2c" && screenId !== "H2d" && screenId !== "H2b" && screenId !== "H2g" && screenId !== "H7a" && (
           <p>Esta sección todavía no contiene datos de la ficha. <Link className="underline" href={hostHref(screenId)}>Abrir la demostración</Link></p>
         )}
       </>}

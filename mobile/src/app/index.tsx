@@ -43,7 +43,7 @@ function PatientHub({ patient }: { patient: { id: string; full_name: string } })
       <Text style={styles.mealBadgeText}>SIGUIENTE COMIDA</Text>
       <Text style={styles.mealTitle}>{next?.name ?? (!state ? 'Cargando menú…' : state.meals ? 'Sin más comidas programadas para hoy' : 'Menú no disponible')}</Text>
       {next && <Text style={styles.mealSub}>{next.scheduled_time.slice(0, 5)}</Text>}
-      <Pressable style={styles.primary} onPress={() => next ? router.push({ pathname: '/pantalla/[slug]', params: { slug: 'platillo', mealId: next.id } }) : router.navigate('/dietas')}><Text style={styles.primaryText}>{next ? 'Ver comida' : 'Abrir dietas'}</Text></Pressable>
+      <Pressable style={styles.primary} onPress={() => router.navigate('/dietas')}><Text style={styles.primaryText}>Abrir dietas</Text></Pressable>
     </View>
     <Action title="Salud integral" subtitle="Rutinas, hábitos e hidratación" icon="fitness-outline" onPress={() => router.navigate('/salud')} color="#18A66A" />
     <Action title="Mi perfil" subtitle="Cuenta vinculada" icon="person-outline" onPress={() => router.navigate('/perfil')} color="#F28A26" />
