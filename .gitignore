@@ -1,5 +1,6 @@
 /.local-db-test/
 /.cecyfit-verification/
+/supabase/.temp/
 
 **/.env
 **/.env.*
