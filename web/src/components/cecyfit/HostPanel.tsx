@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { HostDemoContext } from "@/lib/auth/AuthGate";
+import { ProfessionalChat } from "@/lib/patients/ProfessionalChat";
 import { PatientWorkspace } from "@/lib/patients/PatientWorkspace";
 import { ProfessionalOverview } from "@/lib/patients/ProfessionalOverview";
 import { DemoClientList, DemoRegister, hostScreens } from "./host";
@@ -19,10 +20,11 @@ export function HostPanel({ screenId, patientId }: {
   const overview = !demo && (screenId === "H1" || screenId === "H6");
   const content = demo && screenId === "H2" ? <DemoClientList />
     : demo && screenId === "H2a" ? <DemoRegister />
+    : !demo && screenId === "H8" ? <ProfessionalChat />
     : overview ? <ProfessionalOverview tracking={screenId === "H6"} />
     : patientId && !demo ? <PatientWorkspace key={`${patientId}:${screenId}`} {...{ patientId, screenId }} />
     : screen?.el;
-  const preview = Boolean(demo || (!patientId && !overview && screenId !== "H2" && screenId !== "H2a"));
+  const preview = Boolean(demo || (!patientId && !overview && screenId !== "H2" && screenId !== "H2a" && screenId !== "H8"));
 
   return (
     <HostPreviewContext.Provider value={preview}>

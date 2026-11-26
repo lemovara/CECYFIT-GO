@@ -5,6 +5,7 @@ const items = [
   { name: 'index', title: 'HUB', icon: 'home-outline' as const, active: 'home' as const },
   { name: 'dietas', title: 'Dietas', icon: 'restaurant-outline' as const, active: 'restaurant' as const },
   { name: 'salud', title: 'Salud', icon: 'fitness-outline' as const, active: 'fitness' as const },
+  { name: 'chat', title: 'Chat', icon: 'chatbubble-outline' as const, active: 'chatbubble' as const },
   { name: 'perfil', title: 'Perfil', icon: 'person-outline' as const, active: 'person' as const },
 ];
 

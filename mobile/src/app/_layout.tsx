@@ -23,7 +23,7 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <StatusBar style="dark" />
       {demo || access?.patient ? (
-        <PatientSession patient={demo ? null : access?.patient ?? null} closeSession={closeSession}>
+        <PatientSession patient={demo ? null : access?.patient ?? null} userId={demo ? null : session?.user.id ?? null} accessOffline={!demo && Boolean(access?.offline)} accessCheckedAt={demo ? undefined : access?.checkedAt} retryAccess={refresh} closeSession={closeSession}>
           <AppTabs key={demo ? 'demo' : session?.user.id} />
         </PatientSession>
       ) : (

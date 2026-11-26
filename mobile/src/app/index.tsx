@@ -26,6 +26,7 @@ export default function HomeScreen() {
   </ScrollView></SafeAreaView>;
 }
 function PatientHub({ patient }: { patient: { id: string; full_name: string } }) {
+  const { accessOffline, retryAccess } = usePatient();
   const [state, setState] = useState<{ meals?: Meal[] }>();
   useFocusEffect(useCallback(() => {
     let active = true;
@@ -39,6 +40,7 @@ function PatientHub({ patient }: { patient: { id: string; full_name: string } })
   return <SafeAreaView style={styles.safe}><ScrollView contentContainerStyle={styles.content}>
     <Text style={styles.brand}>CECYFIT GO!</Text>
     <Text style={styles.greeting}>¡Hola, {patient.full_name}!</Text>
+    {accessOffline && <View style={styles.message}><Text style={styles.muted}>Sin conexión. Puedes consultar el menú guardado en Dietas; podría estar desactualizado.</Text><Pressable accessibilityRole="button" onPress={retryAccess}><Text style={styles.tileLink}>Reintentar</Text></Pressable></View>}
     <View style={[styles.mealCard, { marginTop: 18 }]}>
       <Text style={styles.mealBadgeText}>SIGUIENTE COMIDA</Text>
       <Text style={styles.mealTitle}>{next?.name ?? (!state ? 'Cargando menú…' : state.meals ? 'Sin más comidas programadas para hoy' : 'Menú no disponible')}</Text>

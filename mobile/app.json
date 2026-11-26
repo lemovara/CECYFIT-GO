@@ -40,7 +40,10 @@
           "cameraPermission": "Permite que CECYFIT GO escanee el QR de tu profesional.",
           "recordAudioAndroid": false
         }
-      ]
+      ],
+      "expo-secure-store",
+      "expo-image",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

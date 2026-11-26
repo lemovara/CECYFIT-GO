@@ -26,6 +26,7 @@ const paths = {
   H7a: "clientes/plan-nutricional",
   H7b: "clientes/rutina",
   H7c: "clientes/habitos",
+  H8: "chat",
   H7d: "clientes/editar-salud",
 } as const;
 

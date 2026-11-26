@@ -1,6 +1,8 @@
 /.local-db-test/
 /.cecyfit-verification/
 /supabase/.temp/
+**/__pycache__/
+*.py[cod]
 
 **/.env
 **/.env.*

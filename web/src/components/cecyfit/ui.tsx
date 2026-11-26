@@ -4,7 +4,7 @@ import { hostHref, type HostScreenId } from './hostRoutes'
 
 import {
   House, Utensils, HeartPulse, User, Wifi, WifiOff, RefreshCw, TriangleAlert, ChevronRight, LogOut,
-  LayoutDashboard, Users, LayoutTemplate, Blocks, FolderOpen, Activity, Bell, Check, X,
+  LayoutDashboard, Users, LayoutTemplate, Blocks, FolderOpen, Activity, Bell, Check, X, MessageCircle,
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase/clients'
 import { HostDemoContext } from '@/lib/auth/AuthGate'
@@ -261,7 +261,7 @@ export const HostPreviewContext = createContext(false)
 
 const hostNav = [
   { k: 'Inicio', i: LayoutDashboard }, { k: 'Clientes', i: Users }, { k: 'Plantillas', i: LayoutTemplate },
-  { k: 'Módulos', i: Blocks }, { k: 'Expedientes', i: FolderOpen }, { k: 'Seguimiento', i: Activity },
+  { k: 'Módulos', i: Blocks }, { k: 'Expedientes', i: FolderOpen }, { k: 'Seguimiento', i: Activity }, { k: 'Chat', i: MessageCircle },
 ]
 
 export const Desk = ({ nav, title, actions, children, crumbs }: { nav: string; title: string; actions?: ReactNode; children: ReactNode; crumbs?: string }) => {
@@ -289,7 +289,7 @@ async function handleLogout() {
   }
 }
   const destinations: Record<string, HostScreenId> = {
-    Inicio: 'H1', Clientes: 'H2', Plantillas: 'H3', Módulos: 'H4', Expedientes: 'H5', Seguimiento: 'H6',
+    Inicio: 'H1', Clientes: 'H2', Plantillas: 'H3', Módulos: 'H4', Expedientes: 'H5', Seguimiento: 'H6', Chat: 'H8',
   }
   return (
   <div className="flex h-dvh min-h-0 w-full min-w-0 overflow-hidden bg-[#f8faff]">

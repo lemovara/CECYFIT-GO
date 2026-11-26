@@ -4,8 +4,8 @@ import { Panel } from "@/components/cecyfit/ui";
 import { supabase } from "@/lib/supabase/clients";
 import type { Patient } from "./types";
 
-type Care = { goal: string; restrictions: string; height_cm: number | null; weight_kg: number | null };
-const blank: Care = { goal: "", restrictions: "", height_cm: null, weight_kg: null };
+type Care = { goal: string; restrictions: string; height_cm: number | null; weight_kg: number | null; water_goal_ml: number | null };
+const blank: Care = { goal: "", restrictions: "", height_cm: null, weight_kg: null, water_goal_ml: null };
 const field = "mt-1 block w-full rounded-lg border border-line p-2";
 
 export function PatientCare({ patient }: { patient: Patient }) {
@@ -17,7 +17,7 @@ export function PatientCare({ patient }: { patient: Patient }) {
 
   useEffect(() => {
     let active = true;
-    void supabase.from("patient_care_profiles").select("goal,restrictions,height_cm,weight_kg")
+    void supabase.from("patient_care_profiles").select("goal,restrictions,height_cm,weight_kg,water_goal_ml")
       .eq("patient_id", patient.id).maybeSingle().then(({data,error}) => {
         if (!active) return;
         if (error) setError("No se pudo cargar la información nutricional.");
@@ -38,7 +38,7 @@ export function PatientCare({ patient }: { patient: Patient }) {
       const { error } = await supabase.from("patient_care_profiles").upsert({
         patient_id: patient.id, goal: String(form.get("goal") ?? "").trim(),
         restrictions: String(form.get("restrictions") ?? "").trim(),
-        height_cm: quantity("height"), weight_kg: quantity("weight"),
+        height_cm: quantity("height"), weight_kg: quantity("weight"), water_goal_ml: quantity("water"),
       });
       if (error) throw error;
       setSaved(true);
@@ -61,6 +61,7 @@ export function PatientCare({ patient }: { patient: Patient }) {
         <label>Peso (kg)<input className={field} name="weight" type="number" min="1" max="500" step=".1" defaultValue={care.weight_kg ?? ""} /></label>
         <label>Objetivo<textarea className={field} name="goal" maxLength={1500} defaultValue={care.goal} /></label>
         <label>Restricciones alimentarias<textarea className={field} name="restrictions" maxLength={1500} defaultValue={care.restrictions} /></label>
+        <label>Meta diaria de agua (ml)<input className={field} name="water" type="number" min="1" max="20000" defaultValue={care.water_goal_ml ?? ""} /></label>
         {patient.status === "ACTIVE" && <button className="justify-self-start rounded-lg bg-blue px-3 py-2 font-bold text-white" type="submit">
           {saving ? "Guardando…" : "Guardar ficha"}
         </button>}

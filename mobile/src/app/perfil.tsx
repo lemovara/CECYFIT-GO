@@ -1,18 +1,15 @@
-import { BackHandler, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { usePatient } from '@/lib/patient-session';
 import { Ionicons } from '@/components/icon';
-import { PatientExtraMeals } from '@/components/patient-extra-meals';
-import { mealDate } from '@/lib/patient-meals';
 import { supabase } from '@/lib/supabase';
 
 type Care = { goal: string; restrictions: string; height_cm: number | null; weight_kg: number | null };
 export default function Perfil(){
 const { patient, closeSession } = usePatient();
 const [error, setError] = useState('');
-const [extraDay, setExtraDay] = useState<string | null>(null);
 const [care, setCare] = useState<Care | null>();
 const patientId = patient?.id;
 useFocusEffect(useCallback(() => {
@@ -24,26 +21,14 @@ useFocusEffect(useCallback(() => {
     });
   return () => { active = false; };
 }, [patientId]));
-useFocusEffect(useCallback(() => {
-  if (!extraDay || Platform.OS !== 'android') return;
-  const listener = BackHandler.addEventListener('hardwareBackPress', () => {
-    setExtraDay(null);
-    return true;
-  });
-  return () => listener.remove();
-}, [extraDay]));
 const close = async () => setError(await closeSession() ?? '');
 const sessionButton = <><Pressable accessibilityRole="button" style={s.row} onPress={() => void close()}><Text style={s.rowTitle}>{patient ? 'Cerrar sesión' : 'Salir de la demostración'}</Text></Pressable>{error ? <Text accessibilityRole="alert">{error}</Text> : null}</>;
-if (patient && extraDay) return <PatientExtraMeals patientId={patient.id} day={extraDay} backLabel="Volver a Perfil" onBack={() => setExtraDay(null)} />;
 if (patient) return <SafeAreaView style={s.safe}><ScrollView contentContainerStyle={s.content}>
   <Text style={s.title}>Mi perfil</Text>
   <View style={s.profile}><Text style={s.name}>{patient.full_name}</Text><Text style={s.sub}>Cuenta vinculada</Text></View>
   <Text style={s.heading}>Mi ingesta</Text>
   <Pressable accessibilityRole="button" style={s.row} onPress={() => router.navigate('/dietas')}>
     <Text style={s.rowTitle}>Registrar una comida de mi dieta</Text>
-  </Pressable>
-  <Pressable accessibilityRole="button" style={s.row} onPress={() => setExtraDay(mealDate())}>
-    <Text style={s.rowTitle}>Registrar comida fuera del plan de hoy</Text>
   </Pressable>
   {care && <>
     <Text style={s.heading}>Mi información nutricional</Text>
